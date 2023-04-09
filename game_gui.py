@@ -202,7 +202,11 @@ def do_command(command, game_player, game_board):
     }
     if result["player"]["doing_challenge"]:
         result["succeed"] = True
-        if command == challenge_results[result["player"]["level"]], [result["player"]["current_position"]]:
+        print(command)
+        print(result["player"]["level"])
+        print(result["player"]["current_position"])
+        print(challenge_results[result["player"]["level"]-1][result["player"]["current_position"]])
+        if command == challenge_results[result["player"]["level"]-1][result["player"]["current_position"]]:
             result["board"][str(result["player"]["current_position"])] = state_caption[2]
             result["player"]["solved_cells"] += 1
             result["caption"] = "You won this challenge\nCommands:\n   1. N : go North\n   2. E : go East\n   3. S : go south\n   4. W : go West"
@@ -300,8 +304,7 @@ def game_gui():
     def initial_gui():
         label_board_cells[12].config(background="light green")
 
-        write_to_text(text_room_space, "<----   PUZZLE LAND   ---->\n\nPlease enter your name:",
-                      tk.INSERT, "1.0", tk.END)
+        write_to_text(text_room_space, "<----   PUZZLE LAND   ---->\n\nPlease enter your name:",tk.INSERT, "1.0", tk.END)
 
         write_to_text(text_status, "", "-1.-1", "1.0", tk.END)
 
@@ -319,12 +322,15 @@ def game_gui():
                 if entry_command.get() in question_answer:
                     if entry_command.get() in ('y','yes'):
                         swap_level = 1
+                        swap_health = 3
                         if player["solved_cells"] > 23 and player["level"] < 4:
                             swap_level = player["level"]
+                            swap_health = player["health"]
                         player = initial_player()
                         board = initial_board()
                         player["level"] = swap_level
                         board["level"] = swap_level
+                        player["health"] = swap_health
                         board["12"] = state_caption[1]
                     else:
                         game_windows.destroy()
@@ -355,7 +361,7 @@ def game_gui():
                         write_to_text(text_room_space, "\n<><> YOU WIN <><>\nDo you want to play again ? (y/n)", tk.INSERT, "-1.-1", "")
                     else:
                         write_to_text(text_room_space, "<----   PUZZLE LAND   ---->",tk.INSERT, "1.0", tk.END)
-                        write_to_text(text_room_space, "\n<><>/\\/\\ Level up /\\/\\\nDo you want to continue ? (y/n)", tk.INSERT, "-1.-1", "")
+                        write_to_text(text_room_space, "\n/\\__/\\/\\ Level up /\\/\\__/\\\nDo you want to continue ? (y/n)", tk.INSERT, "-1.-1", "")
                     player["level"] += 1
             else:
                 write_to_text(text_room_space, "\nPlease enter your name:", tk.INSERT, "-1.-1", "")
