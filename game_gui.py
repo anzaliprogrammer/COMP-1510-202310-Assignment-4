@@ -9,7 +9,7 @@ board_cells_caption = ("-2 , 2","-1 , 2","0 , 2","1 , 2","2 , 2","-2 , 1","-1 , 
                 "-2 , 0","-1 , 0","0 , 0","1 , 0","2 , 0","-2 , -1","-1 , -1","0 , -1","1 , -1","2 , -1",
                 "-2 , -2","-1 , -2","0 , -2","1 , -2","2 , -2")
 challenge_question = ((
-    '10 + 90 =',
+    "Who is world's most famous dog?",
     '10 + 90 =',
     '10 + 90 =',
     '10 + 90 =',
@@ -85,7 +85,7 @@ challenge_question = ((
     '20 + 100 =',
     '20 + 100 ='))
 challenge_results = ((
-    '100',
+    'toto',
     '100',
     '100',
     '100',
@@ -206,7 +206,7 @@ def do_command(command, game_player, game_board):
         print(result["player"]["level"])
         print(result["player"]["current_position"])
         print(challenge_results[result["player"]["level"]-1][result["player"]["current_position"]])
-        if command == challenge_results[result["player"]["level"]-1][result["player"]["current_position"]]:
+        if command.lower() == challenge_results[result["player"]["level"]-1][result["player"]["current_position"]]:
             result["board"][str(result["player"]["current_position"])] = state_caption[2]
             result["player"]["solved_cells"] += 1
             result["caption"] = "You won this challenge\nCommands:\n   1. N : go North\n   2. E : go East\n   3. S : go south\n   4. W : go West"
