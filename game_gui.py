@@ -5,6 +5,161 @@ level_caption = ('Entery', 'Level 1', 'Level 2', 'Level 3', 'Finished')
 state_caption = ('undiscovered', 'discovered', 'solved', 'failed')
 directions = ('n','s','w','e','north', 'south', 'west', 'east','1','2','3','4')
 question_answer = ('y','n','yes','no')
+board_cells_caption = ("-2 , 2","-1 , 2","0 , 2","1 , 2","2 , 2","-2 , 1","-1 , 1","0 , 1","1 , 1","2 , 1",
+                "-2 , 0","-1 , 0","0 , 0","1 , 0","2 , 0","-2 , -1","-1 , -1","0 , -1","1 , -1","2 , -1",
+                "-2 , -2","-1 , -2","0 , -2","1 , -2","2 , -2")
+challenge_question = ((
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    'base cell',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 =',
+    '10 + 90 ='), (
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    'base cell',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 =',
+    '15 + 95 ='), (
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    'base cell',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 =',
+    '20 + 100 ='))
+challenge_results = ((
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    'base cell',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100',
+    '100'), (
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    'base cell',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110',
+    '110'), (
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    'base cell',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120',
+    '120'))
 
 def initial_player():
     game_player = {
@@ -38,14 +193,6 @@ def can_move(direction, position):
         result = False
     return result
 
-def challenge_result(position, level):
-    result = ((100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),
-              (100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),
-              (100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),
-              (100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),
-              (100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120),(100, 110, 120))
-    return result[position][level-1]
-
 def do_command(command, game_player, game_board):
     result = {
         "succeed": False,
@@ -55,18 +202,11 @@ def do_command(command, game_player, game_board):
     }
     if result["player"]["doing_challenge"]:
         result["succeed"] = True
-        if isinstance(command, int):
-            if int(command) == challenge_result((result["player"]["current_position"]), (result["player"]["level"])):
-                result["board"][str(result["player"]["current_position"])] = state_caption[2]
-                result["player"]["solved_cells"] += 1
-                result["caption"] = "You won this challenge\nCommands:\n   1. N : go North\n   2. E : go East\n   3. S : go south\n   4. W : go West"
-                result["player"]["doing_challenge"] = False
-            else:
-                result["board"][str(result["player"]["current_position"])] = state_caption[3]
-                result["player"]["health"] -= 1
-                result["caption"] = "You lost this challenge\nCommands:\n   1. N : go North\n   2. E : go East\n   3. S : go south\n   4. W : go West\n   5. C : do Challenge"
-                result["player"]["doing_challenge"] = False
-            return result
+        if command == challenge_results[result["player"]["level"]], [result["player"]["current_position"]]:
+            result["board"][str(result["player"]["current_position"])] = state_caption[2]
+            result["player"]["solved_cells"] += 1
+            result["caption"] = "You won this challenge\nCommands:\n   1. N : go North\n   2. E : go East\n   3. S : go south\n   4. W : go West"
+            result["player"]["doing_challenge"] = False
         else:
             result["board"][str(result["player"]["current_position"])] = state_caption[3]
             result["player"]["health"] -= 1
@@ -168,15 +308,9 @@ def game_gui():
         entry_command.delete("0",tk.END)
 
     def show_challenge(position, level):
-        operands = (((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),
-                    ((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),
-                    ((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),
-                    ((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),
-                    ((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)),((10, 90), (15, 95), (20, 100)))
         write_to_text(text_room_space, "<----   PUZZLE LAND   ---->",tk.INSERT, "1.0", tk.END)
         write_to_text(text_room_space, f"\nLevel : {level} - Challenge No : {position}", tk.INSERT, "-1.-1", "")
-        write_to_text(text_room_space, f"\n          {operands[position][level-1][0]} + {operands[position][level-1][1]} = ", tk.INSERT, "-1.-1", "")
-
+        write_to_text(text_room_space, f"\n{challenge_question[level-1][position]}", tk.INSERT, "-1.-1", "")
 
     def play_game(event):
         if event.char == "\r":
@@ -249,9 +383,6 @@ def game_gui():
         return gui_windows
 
     game_windows = make_gui(gui_dim)
-    board_cells_caption = ("-2 , 2","-1 , 2","0 , 2","1 , 2","2 , 2","-2 , 1","-1 , 1","0 , 1","1 , 1","2 , 1",
-                 "-2 , 0","-1 , 0","0 , 0","1 , 0","2 , 0","-2 , -1","-1 , -1","0 , -1","1 , -1","2 , -1",
-                 "-2 , -2","-1 , -2","0 , -2","1 , -2","2 , -2")
     label_board_cells = []
 
     text_room_space = tk.Text(game_windows, font=('helvetica',25,'bold'), width=44, height=13, foreground="yellow", background="blue")
